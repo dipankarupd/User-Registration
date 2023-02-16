@@ -3,6 +3,7 @@ package com.example.firebase
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_update.*
 
@@ -20,6 +21,9 @@ class Update : AppCompatActivity() {
         getSetData()
         update.setOnClickListener {
             updateData()
+        }
+        cancel.setOnClickListener {
+            finish()
         }
     }
 
@@ -47,6 +51,13 @@ class Update : AppCompatActivity() {
         studentMap["name"] = newname
         studentMap["email"] = newemail
         studentMap["phNum"] = newnum
-        
+
+        reference.child("userId").updateChildren(studentMap).addOnCompleteListener { listener ->
+
+            if (listener.isSuccessful) {
+                Toast.makeText(applicationContext, "Updated the data", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
     }
 }

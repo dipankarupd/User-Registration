@@ -10,8 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_add.view.*
 
-class ViewAdapter(val item : ArrayList<Students>,val context : Context) : RecyclerView.Adapter<ItemViewHolder>() {
 
+class ViewAdapter(val item: ArrayList<Students>,val context : Context) : RecyclerView.Adapter<ItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
 
 
@@ -42,6 +42,10 @@ class ViewAdapter(val item : ArrayList<Students>,val context : Context) : Recycl
         return item.size
     }
 
+    fun getItem(position: Int) :String {
+        return item[position].toString()
+    }
+
 }
 
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,5 +53,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var emailTv : TextView = itemView.findViewById(R.id.textEmail)
     var phoneTv : TextView = itemView.findViewById(R.id.textNumber)
     var layout : ConstraintLayout = itemView.findViewById(R.id.viewlayout)
+
+
 }
 
