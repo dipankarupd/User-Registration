@@ -3,7 +3,10 @@ package com.example.firebase.UserRegistration
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import com.example.firebase.ForgotPwFragment
 import com.example.firebase.MainActivity
 import com.example.firebase.R
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +22,12 @@ class SignIn : AppCompatActivity() {
         supportActionBar?.title = "Sign In"
 
         forgotPw.setOnClickListener {
-            // to be implemented
+
+            Log.d("foooooooooo" , "i")
+            var fragmentManager : FragmentManager = supportFragmentManager
+            var forgotPwFragment = ForgotPwFragment()
+            forgotPwFragment.show(fragmentManager , "ForgotPwFragment")
+
         }
 
         btnSignIn.setOnClickListener {
