@@ -1,18 +1,20 @@
 package com.example.firebase
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_forgot_pw.*
-import java.util.zip.Inflater
-class ForgotPwFragment : DialogFragment() {
+import kotlinx.android.synthetic.main.fragment_forgot_password.*
+import org.w3c.dom.Text
+
+class ForgotPassword : DialogFragment() {
     val auth : FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var smbt: Button // Declare smbt as a private property
@@ -22,7 +24,7 @@ class ForgotPwFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_forgot_pw, container, false)
+        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

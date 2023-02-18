@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
         retriveDataFromDatabase()
 
+
+        // delete the data when swiping right
         ItemTouchHelper (object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity() {
 
         }).attachToRecyclerView(recyclerview)
     }
+
+    // retriving the database from web
     fun retriveDataFromDatabase () {
 
         reference.addValueEventListener(object : ValueEventListener {
@@ -83,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    //creating the logout option menu:
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_menu,menu)
         return true

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import com.example.firebase.ForgotPwFragment
+import com.example.firebase.ForgotPassword
 import com.example.firebase.MainActivity
 import com.example.firebase.R
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +25,7 @@ class SignIn : AppCompatActivity() {
 
             Log.d("foooooooooo" , "i")
             var fragmentManager : FragmentManager = supportFragmentManager
-            var forgotPwFragment = ForgotPwFragment()
+            var forgotPwFragment = ForgotPassword()
             forgotPwFragment.show(fragmentManager , "ForgotPwFragment")
 
         }

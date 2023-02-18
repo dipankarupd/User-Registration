@@ -52,7 +52,7 @@ class Update : AppCompatActivity() {
         studentMap["email"] = newemail
         studentMap["phNum"] = newnum
 
-        reference.child("userId").updateChildren(studentMap).addOnCompleteListener { listener ->
+        reference.child(id).updateChildren(studentMap).addOnCompleteListener { listener ->
 
             if (listener.isSuccessful) {
                 Toast.makeText(applicationContext, "Updated the data", Toast.LENGTH_SHORT).show()

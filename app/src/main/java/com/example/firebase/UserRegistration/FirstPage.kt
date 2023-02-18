@@ -23,5 +23,6 @@ class FirstPage : AppCompatActivity() {
             val intent: Intent = Intent(this@FirstPage,SignUp::class.java)
             startActivity(intent)
         }
+
     }
 }
