@@ -54,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val id = adapter.getItem(viewHolder.adapterPosition)
-                reference.child("userId").removeValue()
+                reference.child(id).removeValue()
+                Toast.makeText(applicationContext, "Deleted successfully", Toast.LENGTH_SHORT).show()
             }
 
         }).attachToRecyclerView(recyclerview)

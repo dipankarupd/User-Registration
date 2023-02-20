@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
@@ -12,12 +13,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add.*
 import java.security.Permission
 import java.security.Permissions
+import java.util.UUID
 
 
 class Add : AppCompatActivity() {
@@ -31,12 +35,16 @@ class Add : AppCompatActivity() {
     // creating a uri object:
     var uri : Uri? = null
 
+    //creating a cloud storage reference:
+    val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
+    val imageReference = firebaseStorage.getReference()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         
         add.setOnClickListener { 
-            addUser()
+            uploadImage()
 
         }
         
@@ -84,6 +92,34 @@ class Add : AppCompatActivity() {
          }
     }
 
+    fun uploadImage() {
+
+        add.isClickable = false
+        progressBar.visibility = View.VISIBLE
+
+        val userDp = UUID.randomUUID().toString()
+        val imageRef = imageReference.child("Images").child(userDp)
+
+        // putting the path of selected img into ref
+
+        uri?.let {
+            imageRef.putFile(it).addOnSuccessListener {
+                Toast.makeText(this@Add, "Uploaded succesfully", Toast.LENGTH_SHORT).show()
+
+                val uploadDpReference = imageReference.child("Images").child(userDp)
+                uploadDpReference.downloadUrl.addOnSuccessListener {
+
+                    val imageUrl = it.toString()
+                    addUser(imageUrl)
+                }
+
+            }.addOnFailureListener{
+
+            }
+        }
+        finish()
+    }
+
     fun registerActivityResultLauncher() {
 
         // registration process:
@@ -110,7 +146,7 @@ class Add : AppCompatActivity() {
         )
     }
 
-    fun addUser() {
+    fun addUser(url : String) {
         val userName : String = name.text.toString()
         val userEmail : String = email.text.toString()
         val userNumber : Long = number.text.toString().toLong()
@@ -119,13 +155,16 @@ class Add : AppCompatActivity() {
         val id : String = reference.push().key.toString()
 
         // creating an object of dataclass:
-        val student = Students(id,userName,userEmail,userNumber)
+        val student = Students(url,id,userName,userEmail,userNumber)
 
         //adding it to the database:
         reference.child(id).setValue(student).addOnCompleteListener { task ->
 
             if (task.isComplete) {
 
+                
+                add.isClickable = true
+                progressBar.visibility = View.GONE
                 Toast.makeText(applicationContext, "User added successfully", Toast.LENGTH_SHORT).show()
                 finish()
             }
